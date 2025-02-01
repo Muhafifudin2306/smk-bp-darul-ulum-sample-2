@@ -6,7 +6,7 @@
 * License: https://bootstrapmade.com/license/
 */
 
-(function() {
+(function () {
   "use strict";
 
   /**
@@ -15,8 +15,27 @@
   function toggleScrolled() {
     const selectBody = document.querySelector('body');
     const selectHeader = document.querySelector('#header');
-    if (!selectHeader.classList.contains('scroll-up-sticky') && !selectHeader.classList.contains('sticky-top') && !selectHeader.classList.contains('fixed-top')) return;
-    window.scrollY > 100 ? selectBody.classList.add('scrolled') : selectBody.classList.remove('scrolled');
+    const webLogo = document.querySelector('#web-logo');
+
+    // Pastikan elemen ada sebelum melanjutkan
+    if (!selectBody || !selectHeader || !webLogo) return;
+
+    // Cek apakah header memiliki kelas yang diperlukan
+    const isHeaderSticky = selectHeader.classList.contains('scroll-up-sticky') ||
+      selectHeader.classList.contains('sticky-top') ||
+      selectHeader.classList.contains('fixed-top');
+
+    if (!isHeaderSticky) return;
+
+    // Cek posisi scroll
+    const isScrolled = window.scrollY > 175;
+    const isScrolled2 = window.scrollY > 300;
+
+    // Toggle kelas 'scrolled' pada body
+    selectBody.classList.toggle('scrolled', isScrolled);
+
+    // Toggle kelas 'd-none' pada logo
+    webLogo.classList.toggle('d-none', !isScrolled2);
   }
 
   document.addEventListener('scroll', toggleScrolled);
@@ -50,7 +69,7 @@
    * Toggle mobile nav dropdowns
    */
   document.querySelectorAll('.navmenu .toggle-dropdown').forEach(navmenu => {
-    navmenu.addEventListener('click', function(e) {
+    navmenu.addEventListener('click', function (e) {
       e.preventDefault();
       this.parentNode.classList.toggle('active');
       this.parentNode.nextElementSibling.classList.toggle('dropdown-active');
@@ -127,7 +146,7 @@
    * Init swiper sliders
    */
   function initSwiper() {
-    document.querySelectorAll(".init-swiper").forEach(function(swiperElement) {
+    document.querySelectorAll(".init-swiper").forEach(function (swiperElement) {
       let config = JSON.parse(
         swiperElement.querySelector(".swiper-config").innerHTML.trim()
       );
@@ -145,7 +164,7 @@
   /**
    * Correct scrolling position upon page load for URLs containing hash links.
    */
-  window.addEventListener('load', function(e) {
+  window.addEventListener('load', function (e) {
     if (window.location.hash) {
       if (document.querySelector(window.location.hash)) {
         setTimeout(() => {
